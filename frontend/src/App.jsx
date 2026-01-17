@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { Home, Users, Calendar } from 'lucide-react'
+import Dashboard from './pages/Dashboard'
 import Employees from './pages/Employees'
 import Attendance from './pages/Attendance'
 
@@ -35,12 +36,7 @@ function App() {
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <Routes>
-            <Route path="/" element={
-              <div className="text-center py-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome to HRMS Lite</h2>
-                <p className="text-lg text-gray-600">Manage employees and track attendance</p>
-              </div>
-            } />
+            <Route path="/" element={<Dashboard />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/attendance" element={<Attendance />} />
           </Routes>
