@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Calendar } from 'lucide-react'
+import { Calendar, Filter } from 'lucide-react'
 import AttendanceForm from '../components/AttendanceForm'
 import EmployeeSelect from '../components/EmployeeSelect'
 
@@ -7,8 +7,14 @@ export default function Attendance() {
   const [employees, setEmployees] = useState([])
   const [selectedEmployee, setSelectedEmployee] = useState(null)
   const [attendanceRecords, setAttendanceRecords] = useState([])
+  const [filteredRecords, setFilteredRecords] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [dateFilter, setDateFilter] = useState({
+    startDate: '',
+    endDate: ''
+  })
+  const [presentDays, setPresentDays] = useState(0)
 
   const fetchEmployees = async () => {
     try {
@@ -25,12 +31,42 @@ export default function Attendance() {
       setLoading(true)
       const response = await fetch(`/api/attendance?employee_id=${employeeId}`)
       const data = await response.json()
-      setAttendanceRecords(Array.isArray(data) ? data : [])
+      const records = Array.isArray(data) ? data : []
+      setAttendanceRecords(records)
+      applyDateFilter(records)
+      
+      // Calculate present days
+      const present = records.filter(r => r.status === 'Present').length
+      setPresentDays(present)
     } catch (err) {
       setError('Failed to load attendance')
     } finally {
       setLoading(false)
     }
+  }
+
+  const applyDateFilter = (records) => {
+    if (!dateFilter.startDate && !dateFilter.endDate) {
+      setFilteredRecords(records)
+      return
+    }
+
+    const filtered = records.filter(record => {
+      const recordDate = new Date(record.date)
+      const start = dateFilter.startDate ? new Date(dateFilter.startDate) : new Date('1900-01-01')
+      const end = dateFilter.endDate ? new Date(dateFilter.endDate) : new Date('2100-12-31')
+      
+      return recordDate >= start && recordDate <= end
+    })
+
+    setFilteredRecords(filtered)
+  }
+
+  const handleDateFilterChange = (e) => {
+    const { name, value } = e.target
+    const newFilter = { ...dateFilter, [name]: value }
+    setDateFilter(newFilter)
+    applyDateFilter(attendanceRecords)
   }
 
   const markAttendance = async (formData) => {
@@ -115,12 +151,60 @@ export default function Attendance() {
                 </h3>
                 <p className="text-sm text-gray-500">{selectedEmployee.department}</p>
               </div>
+
+              {/* Date Filter */}
+              <div className="px-4 py-4 border-b border-gray-200 bg-white">
+                <div className="flex items-center space-x-2 mb-3">
+                  <Filter size={16} className="text-gray-600" />
+                  <label className="text-sm font-semibold text-gray-700">Filter by Date</label>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={dateFilter.startDate}
+                      onChange={handleDateFilterChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Start date"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={dateFilter.endDate}
+                      onChange={handleDateFilterChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="End date"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Statistics */}
+              <div className="px-4 py-3 bg-blue-50 border-b border-gray-200">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-2xl font-bold text-blue-600">{presentDays}</p>
+                    <p className="text-xs text-gray-600">Present Days</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-red-600">{attendanceRecords.length - presentDays}</p>
+                    <p className="text-xs text-gray-600">Absent Days</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-green-600">{attendanceRecords.length}</p>
+                    <p className="text-xs text-gray-600">Total Records</p>
+                  </div>
+                </div>
+              </div>
               
               {loading ? (
                 <div className="flex justify-center items-center h-48">
                   <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
                 </div>
-              ) : attendanceRecords.length === 0 ? (
+              ) : filteredRecords.length === 0 ? (
                 <div className="text-center py-16">
                   <Calendar className="mx-auto h-14 w-14 text-gray-400 mb-3" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">No attendance records</h3>
@@ -136,7 +220,7 @@ export default function Attendance() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {attendanceRecords.map((record) => (
+                      {filteredRecords.map((record) => (
                         <tr key={record.id} className="hover:bg-gray-50">
                           <td className="px-4 py-3 text-sm text-gray-900">
                             {new Date(record.date).toLocaleDateString()}
