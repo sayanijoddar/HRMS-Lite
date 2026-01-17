@@ -133,10 +133,32 @@ psql -U postgres -h localhost -d hrms_lite -c "GRANT ALL PRIVILEGES ON SCHEMA pu
 
 ## Usage
 
+### Local Development
 1. Open `http://localhost:5173` in your browser
 2. Navigate to **Employees** page to manage employees
 3. Navigate to **Attendance** page to mark attendance
-4. Use the dashboard for overview (if implemented)
+
+### Production Deployment
+- **Frontend**: https://your-vercel-domain.vercel.app (deployed on Vercel)
+- **Backend**: https://hrms-lite-ltbb.onrender.com (deployed on Render)
+
+## Deployment
+
+### Frontend (Vercel)
+The frontend is deployed on Vercel and automatically updates on every push to main.
+
+See [Frontend Deployment Guide](./frontend/DEPLOYMENT.md) for detailed instructions.
+
+**Live URL**: https://hrms-lite-hlujgow1p-sayanijoddars-projects.vercel.app
+
+### Backend (Render)
+The backend is deployed on Render at: https://hrms-lite-ltbb.onrender.com
+
+All API requests in production are routed to this URL.
+
+### Live Application
+- **Frontend**: https://hrms-lite-hlujgow1p-sayanijoddars-projects.vercel.app
+- **Backend**: https://hrms-lite-ltbb.onrender.com
 
 ## Development
 
