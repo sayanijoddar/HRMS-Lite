@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Tighter spacing */
+.space-y-6 > * + * { margin-top: 1rem !important; }
+.space-y-4 > * + * { margin-top: 0.75rem !important; }
