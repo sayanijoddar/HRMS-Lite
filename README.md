@@ -192,15 +192,9 @@ All API requests in production are routed to this URL.
 ## Future Enhancements
 
 - User authentication and authorization
-- Salary management
 - Leave management
-- Performance reviews
 - Reports and analytics
 - Mobile app
-
-## License
-
-MIT
 
 ## Support
 
