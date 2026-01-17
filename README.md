@@ -172,29 +172,11 @@ All API requests in production are routed to this URL.
 - Backend: Modify files in `backend/app/` and changes reload automatically
 - Frontend: Modify files in `frontend/src/` and changes reload in browser
 
-## Troubleshooting
-
-### Database Connection Issues
-- Ensure PostgreSQL is running
-- Check DATABASE_URL in `.env`
-- Verify database and user exist with correct permissions
-
-### Frontend Won't Load
-- Clear browser cache
-- Check that backend API is running on port 8000
-- Check browser console for errors
-
-### API Errors
-- Check backend logs for detailed error messages
-- Verify request payload matches schema
-- Ensure all required fields are provided
-
 ## Future Enhancements
 
 - User authentication and authorization
 - Leave management
 - Reports and analytics
-- Mobile app
 
 ## Support
 
