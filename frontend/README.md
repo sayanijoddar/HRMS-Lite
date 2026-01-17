@@ -1,16 +1,88 @@
-# React + Vite
+# HRMS-Lite Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the HRMS-Lite application.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 18.3**: UI library
+- **Vite 7.2**: Build tool with HMR
+- **React Router 6.20**: Client-side routing
+- **Tailwind CSS 3.4**: Styling
+- **React Hook Form 7.48**: Form handling
+- **Zod 3.22**: Schema validation
+- **Lucide React**: Icons
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js 18+
+- Backend API running on \http://localhost:8000\
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+\\\ash
+npm install
+\\\
+
+### Development
+
+\\\ash
+npm run dev
+\\\
+
+Runs at \http://localhost:5173\ with HMR enabled.
+
+## Project Structure
+
+`
+src/
+ components/          # Reusable UI components
+    EmployeeForm.jsx
+    EmployeeList.jsx
+    EmployeeSelect.jsx
+    AttendanceForm.jsx
+    AttendanceList.jsx
+    ui.jsx
+ pages/              # Page components
+    Employees.jsx
+    Attendance.jsx
+ hooks/              # Custom React hooks
+    useApi.js       # HTTP request hook
+ App.jsx             # Main app with routing
+ main.jsx            # Entry point
+ index.css           # Global styles
+`
+
+## Features
+
+### Employees Page
+- View all employees in a table
+- Add new employees with form validation
+- Delete employees
+- Form validation with Zod schemas
+
+### Attendance Page
+- Select an employee from dropdown
+- Mark attendance (Present/Absent)
+- View attendance history
+
+## API Integration
+
+The app communicates with the backend API at \http://localhost:8000\.
+
+### Configured Routes
+- \GET /api/employees\ - Fetch employees
+- \POST /api/employees\ - Create employee
+- \DELETE /api/employees/{id}\ - Delete employee
+- \GET /api/attendance\ - Fetch attendance
+- \POST /api/attendance\ - Mark attendance
+
+See [Vite config](./vite.config.js) for proxy setup.
+
+## Building for Production
+
+\\\ash
+npm run build
+\\\
+
+This creates an optimized build in the \dist/\ folder ready for deployment.
