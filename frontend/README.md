@@ -16,7 +16,7 @@ React + Vite frontend for the HRMS-Lite application.
 
 ### Prerequisites
 - Node.js 18+
-- Backend API running on \http://localhost:8000\
+- Backend API running (local: `http://localhost:8000` or production: `https://hrms-lite-ltbb.onrender.com`)
 
 ### Installation
 
@@ -68,16 +68,29 @@ src/
 
 ## API Integration
 
-The app communicates with the backend API at \http://localhost:8000\.
+### Development
+The app communicates with the local backend API at `http://localhost:8000`.
+
+### Production
+In production (Vercel), the app communicates with the deployed backend at `https://hrms-lite-ltbb.onrender.com`.
 
 ### Configured Routes
-- \GET /api/employees\ - Fetch employees
-- \POST /api/employees\ - Create employee
-- \DELETE /api/employees/{id}\ - Delete employee
-- \GET /api/attendance\ - Fetch attendance
-- \POST /api/attendance\ - Mark attendance
+- `GET /api/employees` - Fetch employees
+- `POST /api/employees` - Create employee
+- `DELETE /api/employees/{id}` - Delete employee
+- `GET /api/attendance` - Fetch attendance
+- `POST /api/attendance` - Mark attendance
 
-See [Vite config](./vite.config.js) for proxy setup.
+Environment variables are set in `.env.development` and `.env.production`.
+
+## Deployment
+
+This application is deployed on **Vercel**.
+
+- **Live URL**: https://hrms-lite-hlujgow1p-sayanijoddars-projects.vercel.app
+- **Backend API**: https://hrms-lite-ltbb.onrender.com
+
+See [Deployment Guide](./DEPLOYMENT.md) for complete setup instructions.
 
 ## Building for Production
 
