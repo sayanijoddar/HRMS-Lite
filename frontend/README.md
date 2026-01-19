@@ -87,7 +87,7 @@ Environment variables are set in `.env.development` and `.env.production`.
 
 This application is deployed on **Vercel**.
 
-- **Live URL**: https://hrms-lite-hlujgow1p-sayanijoddars-projects.vercel.app
+- **Live URL**: https://hrms-lite-three.vercel.app/
 - **Backend API**: https://hrms-lite-ltbb.onrender.com
 
 See [Deployment Guide](./DEPLOYMENT.md) for complete setup instructions.
